@@ -1,1 +1,114 @@
-/* Student Finance Tracker styles */
+.skip-link {
+    position:absolute;
+    top: -1000px;
+    left: 0;
+    padding: 1rem 1.5rem;
+    background-color:bisque;
+    color:rgb(81, 45, 115);
+
+}
+.skip-link:focus-visible {
+    top:0;
+    
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+    color:black;
+    background-color:antiquewhite;
+
+}
+
+header {
+    padding: 1rem 1.5rem ;
+    background-color: #512d73;
+    color:antiquewhite;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0; 
+    display: flex;
+    gap: 1rem 1.5rem;
+    flex-wrap: wrap; 
+}
+
+nav a {
+    color:antiquewhite;
+    text-decoration:underline;
+    padding: 0.5rem 1rem;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+nav a:hover {
+    background-color: bisque;
+    color: #512d73;
+
+}
+:focus-visible {
+    outline: 3px solid #512d73;
+    outline-offset: 2px;
+}
+
+nav a:focus-visible {
+    outline: 3px solid bisque;
+    outline-offset: 2px;
+    
+}
+
+main {
+    padding: 1.5rem 1.5rem;
+    max-width: 60rem;
+    margin-inline: auto;
+}
+
+footer {
+    padding: 1.5rem;
+    background-color: bisque;
+    text-align: center;
+}
+
+section {
+    margin-bottom: 2rem;
+}
+
+@media (min-width: 768px) {
+
+    header {
+        padding: 1.5rem 3rem;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+    }
+
+    main {
+        padding: 1.5rem 3rem;
+    }
+    
+}
+
+@media (min-width: 1024px) {
+
+    main {
+        max-width: 80rem; 
+        padding: 1.5rem 4rem;
+
+    }
+
+    footer {
+        padding: 1.5rem 4rem;
+        font-size: 1.125rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    nav a {
+        transition: none;
+    }   
+    
+}
