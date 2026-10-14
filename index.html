@@ -34,11 +34,41 @@
         </section>
         <section id="records" aria-labelledby="records-heading">
             <h2 id="records-heading">Records</h2>
-            <p>View and manage your financial records. Keep an eye on your spending and income.</p>
+            <p>View and manage your financial records. Keep an eye on your spendings.</p>
         </section>
         <section id="form" aria-labelledby="form-heading">
             <h2 id="form-heading">Add/Edit</h2>
             <p>Use this form to add a new financial record or edit an existing one.</p>
+            <form id="finance-form" aria-label="Add/edit" >
+                <label for="description">Description</label>
+                <input type="text" id="description" name="description" aria-describedby="description-error"> 
+                <span class="error-message" id="description-error" aria-live="polite"></span>
+                <label for="amount">Amount</label>
+                <input type="number" id="amount" name="amount" step="0.01" min="0.01" aria-describedby="amount-error">
+                <span class="error-message" id="amount-error" aria-live="polite"></span>
+                <label for="category">Category</label> 
+                <select id="category" name="category" aria-describedby="category-error">
+                    <option value="">Select a category</option>
+                    <option value="food">Food</option>
+                    <option value="transport">Transport</option>
+                    <option value="entertainment">Entertainment</option>
+                    <option value="others">Others</option>
+                </select>
+                <span class="error-message" id="category-error" aria-live="polite"></span>
+                <label for="date">Date</label>
+                <input type="date" id="date" name="date" aria-describedby="date-error">
+                <span class="error-message" id="date-error" aria-live="polite"></span>
+                <label for="currency">Currency</label>
+                <select id="currency" name="currency" aria-describedby="currency-error">
+                    <option value="">Select a currency</option>
+                    <option value="rwf">RWF</option>
+                    <option value="usd">USD</option>
+                    <option value="gbp">GBP</option>
+                </select>
+                <span class="error-message" id="currency-error" aria-live="polite"></span>
+                <button type="submit">Save Record</button>
+                <p role="status" id="form-message" aria-live="polite"></p>
+            </form>
         </section>
         <section id="settings" aria-labelledby="settings-heading">
             <h2 id="settings-heading">Settings</h2>
