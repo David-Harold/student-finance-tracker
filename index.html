@@ -35,6 +35,19 @@
         <section id="records" aria-labelledby="records-heading">
             <h2 id="records-heading">Records</h2>
             <p>View and manage your financial records. Keep an eye on your spendings.</p>
+            <label for="sort-field">Sort records by</label>
+            <select id="sort-field">
+                <option value=""date">Date</option>
+                <option value="description">Description</option>
+                <option value="amount">Amount</option>
+            </select>
+
+            <label for="sort-direction">Sort direction</label>
+            <select id="sort-direction">
+                <option value="asc">Ascending</option>
+                <option value="desc">Descending</option>
+            </select>
+            
             <div id="records-cards"></div>
 
             <table>

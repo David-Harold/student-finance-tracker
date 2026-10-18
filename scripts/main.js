@@ -1,11 +1,29 @@
 import {validateDescription, validateAmount, validateDate, validateCategory, validateUniqueWords } from "./validators.js";
 import { loadRecords, saveRecords } from "./storage.js";
 import { renderRecords } from "./ui.js";
+import { sortRecords } from "./sort.js";
 
 const allowedCurrencies = ["rwf", "usd", "gbp"];
 const form = document.getElementById("finance-form");
 let records = loadRecords();
-renderRecords(records);
+
+const sortFieldSelect = document.getElementById("sort-field");
+const sortDirectionSelect = document.getElementById("sort-direction");
+
+let currentSortField = sortFieldSelect.value;
+let currentSortDirection = sortDirectionSelect.value;
+
+const renderSortedRecords = () => {
+    const sortedRecords = sortRecords(
+        records,
+        currentSortField,
+        currentSortDirection,
+    );
+
+    renderRecords(sortedRecords);
+};
+
+renderSortedRecords();
 
 form.addEventListener("submit", (event)=> {
     event.preventDefault();
@@ -115,8 +133,18 @@ form.addEventListener("submit", (event)=> {
 
     records.push(record);
     saveRecords(records);
-    renderRecords(records);
+    renderSortedRecords();
     formMessage.textContent = "Record saved.";
     form.reset();
 
+});
+
+sortFieldSelect.addEventListener("change", () => {
+    currentSortField = sortFieldSelect.value;
+    renderSortedRecords();
+});
+
+sortDirectionSelect.addEventListener("change", () => {
+    currentSortDirection = sortDirectionSelect.value;
+    renderSortedRecords();
 });
