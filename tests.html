@@ -36,6 +36,8 @@
         check("amount: 012 fails", validateAmount("012") === false);
         check("amount: 12.345 fails", validateAmount("12.345") === false);
         check("amount: abc fails", validateAmount("abc") === false);
+        check("amount: -5 fails", validateAmount("-5") === false);
+        check("amount: 12 passes", validateAmount("12") === true);
 
         // validateDate
         check("date: 2026-10-18 passes", validateDate("2026-10-18") === true);
@@ -68,8 +70,6 @@
         check("sort: date asc first is 2026-10-01", byDateAsc[0].date === "2026-10-01");
         const byDescAsc = sortRecords(sample, "description", "asc");
         check("sort: description asc first is Apple", byDescAsc[0].description === "Apple");
-        check("amount: -5 fails", validateAmount("-5") === false);
-        check("amount: 12 passes", validateAmount("12") === true);
         check("sort: original array untouched", sample[0].description === "Banana");
 
         document.getElementById("summary").textContent = `${passed} of ${total} passed`;
