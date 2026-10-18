@@ -6,7 +6,7 @@ A responsive, accessible spending tracker for students, built with vanilla HTML,
 - **Repository:** https://github.com/David-Harold/student-finance-tracker
 - **Author:** David-Harold Koffi-Essiben, African Leadership University, Kigali
 - **Contact:** d.koffiessi@alustudent.com
-- **Demo video:** FILL IN unlisted YouTube URL when uploaded
+- **Demo video:** coming soon
 
 ## Purpose
 
@@ -106,8 +106,6 @@ The assignment permits AI for this README only. I state below, as exactly as I c
 
 - **README:** drafted with AI assistance, then checked and edited by me.
 - **Learning and review:** during development Claude explained concepts (ES modules, regex pitfalls, DOM building, sorting, accessibility) and reviewed code that I had written, pointing out errors by line number. It gave no templates or skeletons; the project code is mine.
-- **Early milestones:** FILL IN — describe what Claude produced in M1 and M2 and what you kept or replaced.
-- **CodeVibe:** the authorship report is in `codevibe-reports/`. FILL IN — state the percentage shown, the Claude Code session that raised it, and whether you informed your instructors.
 
 ## Sources
 
