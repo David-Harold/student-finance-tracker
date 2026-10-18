@@ -35,6 +35,24 @@
         <section id="records" aria-labelledby="records-heading">
             <h2 id="records-heading">Records</h2>
             <p>View and manage your financial records. Keep an eye on your spendings.</p>
+            <div id="records-cards"></div>
+
+            <table>
+                <caption>Financial records</caption>
+                <thead>
+                    <tr>
+                        <th scope="col">Description</th>
+                        <th scope="col">Amount</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Currency</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="records-body"></tbody>
+            </table>
+
+            <p id="records-empty">There are no records yet.</p>
         </section>
         <section id="form" aria-labelledby="form-heading">
             <h2 id="form-heading">Add/Edit</h2>

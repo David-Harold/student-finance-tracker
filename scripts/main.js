@@ -1,9 +1,11 @@
-import {validateDescription, validateAmount,  validateDate, validateCategory, validateUniqueWords } from "./validators.js";
+import {validateDescription, validateAmount, validateDate, validateCategory, validateUniqueWords } from "./validators.js";
 import { loadRecords, saveRecords } from "./storage.js";
+import { renderRecords } from "./ui.js";
 
 const allowedCurrencies = ["rwf", "usd", "gbp"];
 const form = document.getElementById("finance-form");
 let records = loadRecords();
+renderRecords(records);
 
 form.addEventListener("submit", (event)=> {
     event.preventDefault();
@@ -45,7 +47,7 @@ form.addEventListener("submit", (event)=> {
         amountInput.setAttribute("aria-invalid", "true");
         isFormValid = false;
         firstInvalidInput ??=amountInput;
-    }else{
+    } else {
         amountError.textContent = "";
         amountInput.setAttribute("aria-invalid", "false"); 
     }
@@ -113,6 +115,7 @@ form.addEventListener("submit", (event)=> {
 
     records.push(record);
     saveRecords(records);
+    renderRecords(records);
     formMessage.textContent = "Record saved.";
     form.reset();
 
