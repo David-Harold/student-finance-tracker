@@ -4,7 +4,7 @@
     left: 0;
     padding: 1rem 1.5rem;
     background-color:bisque;
-    color:rgb(81, 45, 115);
+    color:#5b2c6f;
 
 }
 .skip-link:focus-visible {
@@ -24,7 +24,7 @@ body {
 
 header {
     padding: 1rem 1.5rem ;
-    background-color: #512d73;
+    background-color: #5b2c6f;
     color:antiquewhite;
 }
 
@@ -46,11 +46,11 @@ nav a {
 
 nav a:hover {
     background-color: bisque;
-    color: #512d73;
+    color: #5b2c6f;
 
 }
 :focus-visible {
-    outline: 3px solid #512d73;
+    outline: 3px solid #5b2c6f;
     outline-offset: 2px;
 }
 
@@ -76,6 +76,81 @@ section {
     margin-bottom: 2rem;
 }
 
+#records table {
+    display: none;
+}
+
+#records-cards {
+    display: grid;
+    gap: 1rem;
+}
+
+#records-cards article {
+    padding: 1rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.5rem;
+    background: #f8fafc;
+}
+
+#records table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#records th,
+#records td {
+    padding: 0.75rem;
+    text-align: left;
+}
+
+#records thead {
+    background: #5b2c6f;
+    color: #fff;
+}
+ 
+#records tbody tr {
+    border-bottom: 1px solid #d1d5db;
+}
+
+#finance-form {
+    max-width: 36rem;
+}
+
+#finance-form label {
+    display: block;
+    margin-top: 1rem;
+}
+
+#finance-form input,
+#finance-form select {
+    width: 100%;
+    padding: 0.65rem;
+    border: 1px solid #6b7280;
+    border-radius: 0.25rem;
+    box-sizing: border-box;
+    font: inherit;
+}
+
+#finance-form button {
+    margin-top: 1rem;
+    padding: 0.65rem 1rem;
+    border: 0;
+    border-radius: 0.25rem;
+    background: #5b2c6f;
+    color: #fff;
+    cursor: pointer;
+}
+
+#finance-form button:hover {
+    background: #432152;
+}
+
+.error-message {
+    display: block;
+    min-height: 1.25rem;
+    color: #a4161a;
+}
+
 @media (min-width: 768px) {
 
     header {
@@ -90,6 +165,13 @@ section {
         padding: 1.5rem 3rem;
     }
     
+    #records table {
+        display: table;
+    }
+
+    #records-cards {
+        display: none;
+    }
 }
 
 @media (min-width: 1024px) {
@@ -112,3 +194,5 @@ section {
     }   
     
 }
+
+
