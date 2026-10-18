@@ -1,8 +1,9 @@
-import {validateDescription, validateAmount, validateDate, validateCategory, validateUniqueWords } from "./validators.js";
+import {validateDescription, validateAmount, validateDate, validateCategory, validateUniqueWords, validateRecord } from "./validators.js";
 import { loadRecords, saveRecords, loadCap, saveCap } from "./storage.js";
 import { renderRecords, renderDashboard } from "./ui.js";
 import { sortRecords } from "./sort.js";
 import { compileSearch } from "./search.js";
+import { exportRecords } from "./transfer.js";
 
 const allowedCurrencies = ["rwf", "usd", "gbp"];
 const form = document.getElementById("finance-form");
@@ -240,4 +241,62 @@ document.getElementById("save-cap").addEventListener("click", () => {
     saveCap(cap);
     renderDashboard(records, cap);
     capMessage.textContent = "Cap saved.";
+});
+
+document.getElementById("export-json").addEventListener("click", () =>{
+    exportRecords(records);
+});
+
+document.getElementById("import-json").addEventListener("change", async (event) =>{
+    const file = event.target.files[0];
+    const transferMessage = document.getElementById("transfer-message");
+
+    if (!file) return;
+
+    let parsed;
+    try {
+        const text = await file.text();
+        parsed = JSON.parse(text);
+    } catch {
+        transferMessage.textContent = "Invalid file: could not parse JSON.";
+        event.target.value = "";
+        return;
+    }
+
+    if(!Array.isArray(parsed)) {
+        transferMessage.textContent = "Invalid file: expected an array of records. ";
+        event.target.value = "";
+        return;
+    }
+
+    for (let i=0; i <parsed.length; i++) {
+        const error = validateRecord(parsed[i]);
+        if (error !== null) {
+            transferMessage.textContent = `Invalid file: record ${i + 1}, ${error}.`;
+            event.target.value = "";
+            return;
+        }
+    }
+
+    if (!confirm(`Replace all current records with ${parsed.length} iported records?`)) {
+        event.target.value = "";
+        return;
+    }
+
+    records = parsed.map((r) => ({
+        id: r.id,
+        description: r.description,
+        amount: r.amount,
+        category: r.category,
+        date: r.date,
+        currency: r.currency,
+        createdAt: r.createdAt,
+        ...allowedCurrencies(r.updatedAt !== undefined ? { updatedAt: r.updateAt } : {}),
+
+    }));
+
+    saveRecords(records);
+    renderSortedRecords();
+    transferMessage.textContent =  `Imported ${records.length} record${records.length == 1 ? "" : "s"}.`;
+    event.target.value = "";
 });

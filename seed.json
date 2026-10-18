@@ -1,0 +1,117 @@
+[
+    {
+        "id": 172800000000001,
+        "description": "Monthly groceries at Nakumatt",
+        "amount": 45000,
+        "category": "food",
+        "date": "2026-10-01",
+        "currency": "rwf",
+        "createdAt": "2026-10-01T08:00:00.000Z"
+
+    },
+    
+    {
+        "id": 172800000000002,
+        "description": "Bus fare to Campus",
+        "amount": 500,
+        "category": "transport",
+        "date": "2026-10-03",
+        "currency": "rwf",
+        "createdAt": "2026-10-03T07:30:00.000Z"
+
+    },
+    
+
+    {
+        "id": 172800000000003,
+        "description": "Netflix monthly subscription",
+        "amount": 15.99,
+        "category": "entertainment",
+        "date": "2026-10-05",
+        "currency": "usd",
+        "createdAt": "2026-10-05T10:00:00.000Z"
+
+    },
+    
+
+    {
+        "id": 172800000000004,
+        "description": "Textbooks for second semester including mathematics physics and computer science",
+        "amount": 85.50,
+        "category": "others",
+        "date": "2026-10-15",
+        "currency": "gbp",
+        "createdAt": "2026-09-01T08:30:00.000Z"
+
+    },
+    
+
+    {
+        "id": 172800000000005,
+        "description": "Lunch with classmates at the cafeteria",
+        "amount": 8500,
+        "category": "food",
+        "date": "2026-10-08",
+        "currency": "rwf",
+        "createdAt": "2026-10-08T13:00:00.000Z"
+
+    },
+    
+    {
+        "id": 172800000000006,
+        "description": "Moto taxi to city centre",
+        "amount": 1200,
+        "category": "transport",
+        "date": "2026-10-20",
+        "currency": "rwf",
+        "createdAt": "2026-10-20T00:00:00.000Z"
+
+    },
+    
+    {
+        "id": 172800000000007,
+        "description": "Cinema ticket for evening show",
+        "amount": 12.00,
+        "category": "entertainment",
+        "date": "2026-09-28",
+        "currency": "usd",
+        "createdAt": "2026-09-28T08:00:00.000Z"
+
+    },
+    
+    {
+        "id": 172800000000008,
+        "description": "Phone top-up airtime",
+        "amount": 5000,
+        "category": "self-care",
+        "date": "2026-10-10",
+        "currency": "rwf",
+        "createdAt": "2026-10-10T15:00:00.000Z"
+
+    },
+    
+    {
+        "id": 172800000000009,
+        "description": "Dinner at Java House",
+        "amount": 22.75,
+        "category": "food",
+        "date": "2026-10-12",
+        "currency": "usd",
+        "createdAt": "2026-10-12T23:00:00.000Z"
+
+    },
+
+    {
+    
+
+        "id": 172800000000010,
+        "description": "Train ticket to Nairobi",
+        "amount": 45.00,
+        "category": "transport",
+        "date": "2026-09-10",
+        "currency": "gbp",
+        "createdAt": "2026-09-10T06:00:00.000Z"
+
+    }
+
+]

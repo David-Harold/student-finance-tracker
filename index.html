@@ -31,10 +31,7 @@
         <section id="dashboard" aria-labelledby="dashboard-heading">
             <h2 id="dashboard-heading">Dashboard</h2>
             <p>Here's a summary of your financial status.</p>
-        </section>
-        <section id="records" aria-labelledby="records-heading">
-            <h2 id="records-heading">Records</h2>
-            <p>All amounts are converted to RWF for the totals.</p>
+             <p>All amounts are converted to RWF for the totals.</p>
             <dl>
                 <dt>Total spent</dt>
                 <dd id="dash-total">-</dd>
@@ -43,13 +40,17 @@
                 <dt>Transport</dt>
                 <dd id="dash-transport">-</dd>
                 <dt>Entertainment</dt>
-                <dd id="dash-transport">-</dd>
+                <dd id="dash-entertainment">-</dd>
                 <dt>Others</dt>
                 <dd id="dash-others">-</dd>
             </dl>
             <p id="dash-cap-status" aria-live="polite"></p>
             <p id="dash-empty" hidden>No records yet.</p>
 
+        </section>
+        <section id="records" aria-labelledby="records-heading">
+            <h2 id="records-heading">Records</h2>
+           
             <label for="sort-field">Sort records by</label>
             <select id="sort-field">
                 <option value="date">Date</option>
@@ -130,7 +131,13 @@
             <label for="spending-cap">Monthly spending cap (RWF)</label>
             <input type="number" id="spending-cap" min="0" step="1">
             <button type="button" id="save-cap">Save cap</button>
-            <p id="cap-mmessage" aria-live="polite"></p>
+            <p id="cap-message" aria-live="polite"></p>
+            <button type="button" id="export-json">Export Json</button>
+
+            <label for="import-json"> Import JSON</label>
+            <input type="file" id="import-json" accept=".json,application/json">
+
+            <p id="transfer-message" aria-live="polite"></p>
         </section>
     </main>
     <footer>

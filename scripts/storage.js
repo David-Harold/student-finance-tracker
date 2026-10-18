@@ -27,6 +27,7 @@ export const loadCap = () => {
     return saved !== null ? Number(saved) : null;
 };
 
-export const savecap = (cap) => {
+export const saveCap = (cap) => {
     localStorage.setItem(CAP_KEY, String(cap));
 };
+
