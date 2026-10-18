@@ -1,6 +1,6 @@
 import {validateDescription, validateAmount, validateDate, validateCategory, validateUniqueWords } from "./validators.js";
-import { loadRecords, saveRecords } from "./storage.js";
-import { renderRecords } from "./ui.js";
+import { loadRecords, saveRecords, loadCap, saveCap } from "./storage.js";
+import { renderRecords, renderDashboard } from "./ui.js";
 import { sortRecords } from "./sort.js";
 import { compileSearch } from "./search.js";
 
@@ -8,6 +8,7 @@ const allowedCurrencies = ["rwf", "usd", "gbp"];
 const form = document.getElementById("finance-form");
 let records = loadRecords();
 let editingId = null;
+let cap = loadCap();
 
 const sortFieldSelect = document.getElementById("sort-field");
 const sortDirectionSelect = document.getElementById("sort-direction");
@@ -30,6 +31,7 @@ const renderSortedRecords = () => {
 
     const sorted = sortRecords(filtered, currentSortField, currentSortDirection);
     renderRecords(sorted, regex);
+    renderDashboard(records, cap);
 
     if (text === "") {
         searchMessage.textContent = "";
@@ -223,3 +225,19 @@ const handleAction = (action, id) => {
 };
 searchInput.addEventListener("input", renderSortedRecords);
 caseSensitiveCheckbox.addEventListener("change", renderSortedRecords);
+
+document.getElementById("save-cap").addEventListener("click", () => {
+    const input = document.getElementById("spending-cap");
+    const value = Number(input.value);
+    const capMessage = document.getElementById("cap-message");
+
+    if (!input.value || value < 0) {
+        capMessage.textContent = "Enter a valid amount";
+        return;
+    }
+
+    cap = value;
+    saveCap(cap);
+    renderDashboard(records, cap);
+    capMessage.textContent = "Cap saved.";
+});

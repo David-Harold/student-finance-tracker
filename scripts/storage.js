@@ -19,3 +19,14 @@ export const loadRecords = () => {
 export const saveRecords = (records) => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(records));
 };
+
+const CAP_KEY = "student-finance-cap";
+
+export const loadCap = () => {
+    const saved = localStorage.getItem(CAP_KEY);
+    return saved !== null ? Number(saved) : null;
+};
+
+export const savecap = (cap) => {
+    localStorage.setItem(CAP_KEY, String(cap));
+};

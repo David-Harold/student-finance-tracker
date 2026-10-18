@@ -1,3 +1,5 @@
+import { computeStats } from "./stats.js";
+
 const makeButtons = (record) => {
     const editBtn = document.createElement("button");
     editBtn.type = "button";
@@ -9,7 +11,7 @@ const makeButtons = (record) => {
     const deleteBtn = document.createElement("button");
     deleteBtn.type = "button";
     deleteBtn.textContent = "Delete";
-    deleteBtn.setAttribute("arial-label", `Delete ${record.description}`);
+    deleteBtn.setAttribute("aria-label", `Delete ${record.description}`);
     deleteBtn.dataset.id = record.id;
     deleteBtn.dataset.action = "delete"; 
 
@@ -96,4 +98,38 @@ export const renderRecords = (records, regex = null) => {
 
         recordsBody.append(row);
     });
+};
+
+export const renderDashboard = (records, cap) => {
+    const dashEmpty = document.getElementById("dash-empty");
+
+    if (records.length === 0) {
+        dashEmpty.hidden = false;
+        document.getElementById("dash-total").textContent = "_";
+        document.getElementById("dash-food").textContent = "_";
+        document.getElementById("dash-transport").textContent = "_";
+        document.getElementById("dash-entertainment").textContent = "_";
+        document.getElementById("dash-others").textContent = "_";
+        document.getElementById("dash-cap-status").textContent = "";
+        return;
+    }
+
+    dashEmpty.hidden = true;
+    const { total, byCategory } = computeStats(records);
+    const fmt = (n) => `${Math.round(n).toLocaleString()} RWF`;
+
+    document.getElementById("dash-total").textContent = fmt(total);
+    document.getElementById("dash-food").textContent = fmt(byCategory.food)
+    document.getElementById("dash-transport").textContent = fmt(byCategory.transport);
+    document.getElementById("dash-entertainment").textContent = fmt(byCategory.entertainment);
+    document.getElementById("dash-others").textContent = fmt(byCategory.others);
+
+    const capStatus = document.getElementById("dash-cap-status");
+    if (cap === null) {
+        capStatus.textContent = "";
+    } else if (total > cap) {
+        capStatus.textContent = `Over cap by ${fmt(total - cap)}`;
+    } else{
+        capStatus.textContent = `Under cap - ${fmt(cap - total)} remaining`;
+    }
 };
