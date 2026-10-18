@@ -1,3 +1,23 @@
+const makeButtons = (record) => {
+    const editBtn = document.createElement("button");
+    editBtn.type = "button";
+    editBtn.textContent = "Edit";
+    editBtn.setAttribute("aria-label", `Edit ${record.description}`);
+    editBtn.dataset.id = record.id;
+    editBtn.dataset.action = "edit";
+
+    const deleteBtn = document.createElement("button");
+    deleteBtn.type = "button";
+    deleteBtn.textContent = "Delete";
+    deleteBtn.setAttribute("arial-label", `Delete ${record.description}`);
+    deleteBtn.dataset.id = record.id;
+    deleteBtn.dataset.action = "delete"; 
+
+    const fragment = document.createDocumentFragment();
+    fragment.append(editBtn, deleteBtn);
+    return fragment;
+
+}; 
 const highlightText = (element, text, regex) => {
     element.textContent = "";
     if (!regex) {
@@ -45,8 +65,9 @@ export const renderRecords = (records, regex = null) => {
 
         const date = document.createElement("p");
         date.textContent = record.date;
+        const cardButtons = makeButtons(record);
+        card.append(heading, amount, category, date, cardButtons)
 
-        card.append(heading, amount, category, date);
         recordsCards.append(card);
 
         const values = [
@@ -64,6 +85,8 @@ export const renderRecords = (records, regex = null) => {
                 highlightText(cell, String(value), regex);
             } else if (index === 2) {
                 highlightText(cell, String(value), regex);
+            } else if (index === 5) {
+                cell.append(makeButtons(record));
             } else {
                 cell.textContent = value;
             }

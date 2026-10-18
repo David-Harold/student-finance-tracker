@@ -7,6 +7,7 @@ import { compileSearch } from "./search.js";
 const allowedCurrencies = ["rwf", "usd", "gbp"];
 const form = document.getElementById("finance-form");
 let records = loadRecords();
+let editingId = null;
 
 const sortFieldSelect = document.getElementById("sort-field");
 const sortDirectionSelect = document.getElementById("sort-direction");
@@ -138,17 +139,33 @@ form.addEventListener("submit", (event)=> {
         return;
     }
 
-    const record = {
-        id: Date.now(),
-        description,
-        amount: Number(amount),
-        category,
-        date,
-        currency,
-        createdAt: new Date().toISOString()
-    };
+    if (editingId !== null) {
+        const index = records.findIndex(r => r.id === editingId);
+        records[index] = {
+            ...records[index],
+            description,
+            amount: Number(amount),
+            category,
+            date,
+            currency,
+            updatedAt: new Date().toISOString(),
+        };
+        editingId = null;
+        submitButton.textContent = "Save Record";
+    } else {
+        const record = {
+            id: Date.now(),
+            description,
+            amount: Number(amount),
+            category,
+            date,
+            currency,
+            createdAt: new Date().toISOString(),
+        };
+        records.push(record);
+    }
 
-    records.push(record);
+   
     saveRecords(records);
     renderSortedRecords();
     formMessage.textContent = "Record saved.";
@@ -166,5 +183,43 @@ sortDirectionSelect.addEventListener("change", () => {
     renderSortedRecords();
 });
 
+const submitButton = form.querySelector("button[type='submit']");
+
+document.getElementById("records-body").addEventListener("click", (event) => {
+    const btn = event.target.closest("button");
+    if (!btn) return;
+    handleAction(btn.dataset.action, Number(btn.dataset.id));
+});
+
+document.getElementById("records-cards").addEventListener("click", (event) => {
+    const btn = event.target.closest("button");
+    if (!btn) return;
+    handleAction(btn.dataset.action, Number(btn.dataset.id));
+});
+
+const handleAction = (action, id) => {
+    if (action === "delete") {
+        if (!confirm("Delete this record?")) return;
+        records = records.filter(r => r.id !== id);
+        saveRecords(records);
+        renderSortedRecords();
+        return;
+    }
+
+    if (action === "edit") {
+        const record = records.find(r => r.id === id);
+        if (!record) return;
+
+        document.getElementById("description").value = record.description;
+        document.getElementById("amount").value = record.amount;
+        document.getElementById("category").value = record.category;
+        document.getElementById("date").value = record.date;
+        document.getElementById("currency").value = record.currency;
+
+        editingId = record.id;
+        submitButton.textContent = "Update record";
+        document.getElementById("description").focus();
+        }
+};
 searchInput.addEventListener("input", renderSortedRecords);
 caseSensitiveCheckbox.addEventListener("change", renderSortedRecords);
