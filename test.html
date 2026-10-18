@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tests — Student Finance Tracker</title>
+</head>
+<body>
+    <h1>Tests</h1>
+    <ul id="results"></ul>
+    <p id="summary"></p>
+
+    <script type="module">
+        import { validateDescription, validateAmount, validateDate, validateCategory, validateUniqueWords } from "./scripts/validators.js";
+        import { compileSearch } from "./scripts/search.js";
+        import { sortRecords } from "./scripts/sort.js";
+
+        let passed = 0;
+        let total = 0;
+
+        const check = (name, condition) => {
+            total++;
+            if (condition) passed++;
+            const li = document.createElement("li");
+            li.textContent = `${condition ? "PASS" : "FAIL"} — ${name}`;
+            document.getElementById("results").append(li);
+        };
+
+        // validateDescription
+        check("description: plain word passes", validateDescription("Chapati") === true);
+        check("description: leading space fails", validateDescription(" Chapati") === false);
+        check("description: trailing space fails", validateDescription("Chapati ") === false);
+
+        // validateAmount
+        check("amount: 12.50 passes", validateAmount("12.50") === true);
+        check("amount: 012 fails", validateAmount("012") === false);
+        check("amount: 12.345 fails", validateAmount("12.345") === false);
+        check("amount: abc fails", validateAmount("abc") === false);
+
+        // validateDate
+        check("date: 2026-10-18 passes", validateDate("2026-10-18") === true);
+        check("date: 18-10-2026 fails", validateDate("18-10-2026") === false);
+
+        // validateCategory
+        check("category: food passes", validateCategory("food") === true);
+        check("category: 123 fails", validateCategory("123") === false);
+
+        // validateUniqueWords
+        check("uniqueWords: coffee coffee gives false", validateUniqueWords("coffee coffee") === false);
+        check("uniqueWords: coffee and tea gives true", validateUniqueWords("coffee and tea") === true);
+
+        // compileSearch
+        check("search: empty text gives null", compileSearch("", false) === null);
+        check("search: ( gives null", compileSearch("(", false) === null);
+        check("search: ^c matches Chapati", compileSearch("^c", false).test("Chapati") === true);
+
+        // sortRecords
+        const sample = [
+            { description: "Banana", amount: 300, date: "2026-10-03" },
+            { description: "Apple",  amount: 100, date: "2026-10-01" },
+            { description: "Cherry", amount: 200, date: "2026-10-02" },
+        ];
+        const byAmountAsc = sortRecords(sample, "amount", "asc");
+        check("sort: amount asc first is 100", byAmountAsc[0].amount === 100);
+        const byAmountDesc = sortRecords(sample, "amount", "desc");
+        check("sort: amount desc first is 300", byAmountDesc[0].amount === 300);
+        const byDateAsc = sortRecords(sample, "date", "asc");
+        check("sort: date asc first is 2026-10-01", byDateAsc[0].date === "2026-10-01");
+        const byDescAsc = sortRecords(sample, "description", "asc");
+        check("sort: description asc first is Apple", byDescAsc[0].description === "Apple");
+        check("amount: -5 fails", validateAmount("-5") === false);
+        check("amount: 12 passes", validateAmount("12") === true);
+        check("sort: original array untouched", sample[0].description === "Banana");
+
+        document.getElementById("summary").textContent = `${passed} of ${total} passed`;
+    </script>
+</body>
+</html>
