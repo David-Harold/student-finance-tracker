@@ -2,6 +2,7 @@ import {validateDescription, validateAmount, validateDate, validateCategory, val
 import { loadRecords, saveRecords } from "./storage.js";
 import { renderRecords } from "./ui.js";
 import { sortRecords } from "./sort.js";
+import { compileSearch } from "./search.js";
 
 const allowedCurrencies = ["rwf", "usd", "gbp"];
 const form = document.getElementById("finance-form");
@@ -13,14 +14,30 @@ const sortDirectionSelect = document.getElementById("sort-direction");
 let currentSortField = sortFieldSelect.value;
 let currentSortDirection = sortDirectionSelect.value;
 
-const renderSortedRecords = () => {
-    const sortedRecords = sortRecords(
-        records,
-        currentSortField,
-        currentSortDirection,
-    );
+const searchInput = document.getElementById("search-records");
+const caseSensitiveCheckbox = document.getElementById("case-sensitive");
+const searchMessage = document.getElementById("search-message");
 
-    renderRecords(sortedRecords);
+const renderSortedRecords = () => {
+    const text = searchInput.value;
+    const regex = compileSearch(text, caseSensitiveCheckbox.checked);
+
+    const filtered = regex !== null
+        ? records.filter(r => regex.test(r.description) || regex.test(r.category))
+        : records;
+
+
+    const sorted = sortRecords(filtered, currentSortField, currentSortDirection);
+    renderRecords(sorted, regex);
+
+    if (text === "") {
+        searchMessage.textContent = "";
+    } else if (regex === null) {
+        searchMessage.textContent = "Invalid pattern";
+    } else {
+        searchMessage.textContent = `${sorted.length} record${sorted.length === 1 ? "" : "s"} found`;
+    }
+ 
 };
 
 renderSortedRecords();
@@ -148,3 +165,6 @@ sortDirectionSelect.addEventListener("change", () => {
     currentSortDirection = sortDirectionSelect.value;
     renderSortedRecords();
 });
+
+searchInput.addEventListener("input", renderSortedRecords);
+caseSensitiveCheckbox.addEventListener("change", renderSortedRecords);

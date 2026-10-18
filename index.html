@@ -37,7 +37,7 @@
             <p>View and manage your financial records. Keep an eye on your spendings.</p>
             <label for="sort-field">Sort records by</label>
             <select id="sort-field">
-                <option value=""date">Date</option>
+                <option value="date">Date</option>
                 <option value="description">Description</option>
                 <option value="amount">Amount</option>
             </select>
@@ -47,7 +47,15 @@
                 <option value="asc">Ascending</option>
                 <option value="desc">Descending</option>
             </select>
-            
+
+            <label for="search-records">Search records</label>
+            <input type="search" id="search-records">
+
+            <label for="case-sensitive">Case sensitive</label>
+            <input type="checkbox" id="case-sensitive">
+
+            <p id="search-message" aria-live="polite"></p>
+
             <div id="records-cards"></div>
 
             <table>
@@ -65,12 +73,12 @@
                 <tbody id="records-body"></tbody>
             </table>
 
-            <p id="records-empty">There are no records yet.</p>
+            <p id="records-empty">No records to show.</p>
         </section>
         <section id="form" aria-labelledby="form-heading">
             <h2 id="form-heading">Add/Edit</h2>
             <p>Use this form to add a new financial record or edit an existing one.</p>
-            <form id="finance-form" aria-label="Add/edit" >
+            <form id="finance-form" aria-label="Add/edit">
                 <label for="description">Description</label>
                 <input type="text" id="description" name="description" aria-describedby="description-error"> 
                 <span class="error-message" id="description-error" aria-live="polite"></span>
