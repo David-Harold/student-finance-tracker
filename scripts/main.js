@@ -1,12 +1,15 @@
 import {validateDescription, validateAmount,  validateDate, validateCategory, validateUniqueWords } from "./validators.js";
+import { loadRecords, saveRecords } from "./storage.js";
 
 const allowedCurrencies = ["rwf", "usd", "gbp"];
 const form = document.getElementById("finance-form");
+let records = loadRecords();
 
 form.addEventListener("submit", (event)=> {
     event.preventDefault();
     
     let isFormValid = true;
+    let firstInvalidInput = null;
 
     const descriptionInput = document.getElementById("description");
     const description = descriptionInput.value;
@@ -16,10 +19,13 @@ form.addEventListener("submit", (event)=> {
         descriptionError.textContent = "Start and end with a non-space character.";
         descriptionInput.setAttribute("aria-invalid", "true");
         isFormValid = false;
+        firstInvalidInput ??= descriptionInput;
+
     } else if (!validateUniqueWords(description)) {
         descriptionError.textContent = "Do not repeat words.";
         descriptionInput.setAttribute("aria-invalid", "true");
         isFormValid = false;
+        firstInvalidInput ??= descriptionInput;
     } else {
         descriptionError.textContent = "";
         descriptionInput.setAttribute("aria-invalid", "false");
@@ -33,10 +39,12 @@ form.addEventListener("submit", (event)=> {
         amountError.textContent = "Enter a valid amount.";
         amountInput.setAttribute("aria-invalid", "true");
         isFormValid = false;
+        firstInvalidInput ??= amountInput;
     } else if (Number(amount) <= 0) {
         amountError.textContent = "Amount must be greater than zero.";
         amountInput.setAttribute("aria-invalid", "true");
         isFormValid = false;
+        firstInvalidInput ??=amountInput;
     }else{
         amountError.textContent = "";
         amountInput.setAttribute("aria-invalid", "false"); 
@@ -50,6 +58,7 @@ form.addEventListener("submit", (event)=> {
         dateError.textContent = "Choose a valid date.";
         dateInput.setAttribute("aria-invalid", "true");
         isFormValid = false;
+        firstInvalidInput ??= dateInput;
     } else {
         dateError.textContent = "";
         dateInput.setAttribute("aria-invalid", "false");
@@ -64,6 +73,7 @@ form.addEventListener("submit", (event)=> {
         categoryError.textContent = "Choose a category.";
         categoryInput.setAttribute("aria-invalid", "true");
         isFormValid = false;
+        firstInvalidInput ??= categoryInput;
     } else {
         categoryError.textContent = "";
         categoryInput.setAttribute("aria-invalid", "false");
@@ -77,9 +87,33 @@ form.addEventListener("submit", (event)=> {
         currencyError.textContent = "Choose a currency.";
         currencyInput.setAttribute("aria-invalid", "true");
         isFormValid = false;
+        firstInvalidInput ??= currencyInput;
     } else {
         currencyError.textContent = "";
         currencyInput.setAttribute("aria-invalid", "false");
     }
+
+    const formMessage = document.getElementById("form-message");
+
+    if (!isFormValid){
+        formMessage.textContent = "Please correct the errors before saving.";
+        firstInvalidInput.focus();
+        return;
+    }
+
+    const record = {
+        id: Date.now(),
+        description,
+        amount: Number(amount),
+        category,
+        date,
+        currency,
+        createdAt: new Date().toISOString()
+    };
+
+    records.push(record);
+    saveRecords(records);
+    formMessage.textContent = "Record saved.";
+    form.reset();
 
 });
